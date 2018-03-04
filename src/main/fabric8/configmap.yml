@@ -3,4 +3,5 @@ data:
     logging.path=/data/logs
     logging.level.root=WARN
     logging.level.com.gepardec=TRACE
+    wsdl.conax=http://service-conax-fis.10.0.75.2.nip.io/soap-api/conax?wsdl
 

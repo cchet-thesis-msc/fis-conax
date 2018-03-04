@@ -2,8 +2,7 @@ package com.gepardec.sypoc.transformer;
 
 
 import com.gepardec.sypoc.constants.ServiceDefinitions;
-import com.gepardec.sypoc.xml.message.response10.Response;
-import com.gepardec.sypoc.xml.messagerequest.Message;
+import com.gepardec.sypoc.wsdl.conax.xml.messagerequest.Message;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +21,7 @@ public class ConaxTransformer {
     private static SimpleDateFormat sdfTo = new SimpleDateFormat("yyyyMMddHHmm");
 
     public static String request10ToConax(
-            Message requestMessage) {
+            com.gepardec.sypoc.xml.fis.conax.xml.messagerequest.Message requestMessage) {
         if (requestMessage == null || requestMessage.getService() == null
                 || requestMessage.getService().getAction() == null
                 || requestMessage.getService().getAction().getData() == null) {
@@ -91,15 +90,15 @@ public class ConaxTransformer {
         builder.append(System.getProperty("line.separator"));
     }
 
-    public static Response conaxToResponse10(
+    public static Message conaxToResponse10(
             String conaxString) {
-        Response responseMessage = new Response();
-        responseMessage.setService(new Response.Service());
+        Message responseMessage = new Message();
+        responseMessage.setService(new Message.Service());
         responseMessage.getService()
-                       .setAction(new Response.Service.Action());
+                       .setAction(new Message.Service.Action());
         responseMessage.getService()
                        .getAction()
-                       .setData(new Response.Service.Action.Data());
+                       .setData(new Message.Service.Action.Data());
 
         String[] strings = conaxString.split("\\r?\\n");
         if (strings.length < 11) {

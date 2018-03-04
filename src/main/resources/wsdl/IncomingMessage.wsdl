@@ -2,7 +2,7 @@
 <wsdl:definitions name="IncomingMessage" targetNamespace="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:tns="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
     <wsdl:types>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://gepardec.com/sypoc/xml/messageRequest" version="1.0">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest" version="1.0">
             <xs:element name="message">
                 <xs:complexType>
                     <xs:sequence>
@@ -39,9 +39,9 @@
                 </xs:complexType>
             </xs:element>
         </xs:schema>
-        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://gepardec.com/sypoc/xml/messageRequest" xmlns:tns="http://gepardec.com/sypoc/wsdl/incomingMessage"
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest" xmlns:tns="http://gepardec.com/sypoc/wsdl/incomingMessage"
                     attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://gepardec.com/sypoc/wsdl/incomingMessage">
-            <xsd:import namespace="http://gepardec.com/sypoc/xml/messageRequest"/>
+            <xsd:import namespace="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest"/>
             <xsd:element name="messageRequest" type="tns:messageRequest"/>
             <xsd:complexType name="messageRequest">
                 <xsd:sequence>

@@ -192,6 +192,9 @@
                                 <wsdlOption>
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/IncomingMessage.wsdl</wsdl>
                                 </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>http://service-conax-fis.10.0.75.2.nip.io/soap-api/conax?wsdl</wsdl>
+                                </wsdlOption>
                             </wsdlOptions>
                         </configuration>
                         <goals>

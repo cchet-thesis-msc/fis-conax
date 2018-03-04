@@ -4,7 +4,7 @@ import com.gepardec.sypoc.constants.Processors;
 import com.gepardec.sypoc.transformer.ConaxTransformer;
 import com.gepardec.sypoc.utils.LogHelper;
 import com.gepardec.sypoc.wsdl.incomingmessage.MessageRequest;
-import com.gepardec.sypoc.xml.messagerequest.Message;
+import com.gepardec.sypoc.xml.fis.conax.xml.messagerequest.Message;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;

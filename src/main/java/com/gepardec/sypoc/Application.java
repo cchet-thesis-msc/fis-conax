@@ -16,12 +16,15 @@
 package com.gepardec.sypoc;
 
 import com.gepardec.sypoc.constants.Endpoints;
+import com.gepardec.sypoc.wsdl.conax.outgoingmessage.OutgoingMessage;
+import com.gepardec.sypoc.wsdl.conax.outgoingmessage.OutgoingMessagePortType;
 import com.gepardec.sypoc.wsdl.incomingmessage.IncomingMessagePortType;
 import org.apache.camel.component.cxf.CxfEndpoint;
 import org.apache.camel.component.cxf.CxfSpringEndpoint;
 import org.apache.camel.component.cxf.DataFormat;
 import org.apache.cxf.Bus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,6 +32,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+
+import java.net.URL;
 
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
@@ -51,6 +56,12 @@ public class Application {
     @Autowired
     public Application(final Bus bus) {
         this.bus = bus;
+    }
+
+    @Bean
+    OutgoingMessagePortType createConaxWebserviceClient(@Value("${wsdl.conax}") final String wsdlLocation) throws Exception {
+        final OutgoingMessage conaxService = new OutgoingMessage(new URL(wsdlLocation));
+        return conaxService.getOutgoingMessagePort();
     }
 
     @Bean(Endpoints.INCOMING_MESSAGE)

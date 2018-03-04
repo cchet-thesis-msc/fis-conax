@@ -1,9 +1,13 @@
 package com.gepardec.sypoc.service.impl;
 
 import com.gepardec.sypoc.service.api.ResponseService;
-import com.gepardec.sypoc.xml.message.response10.Response;
+import com.gepardec.sypoc.utils.LogHelper;
+import com.gepardec.sypoc.wsdl.conax.outgoingmessage.MessageRequest;
+import com.gepardec.sypoc.wsdl.conax.outgoingmessage.OutgoingMessagePortType;
+import com.gepardec.sypoc.wsdl.conax.xml.messagerequest.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,14 +17,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResponseServiceImpl implements ResponseService {
 
+    private final OutgoingMessagePortType conaxServiceClient;
     private final Logger log;
 
-    public ResponseServiceImpl() {
+    @Autowired
+    public ResponseServiceImpl(final OutgoingMessagePortType conaxServiceClient) {
+        this.conaxServiceClient = conaxServiceClient;
+
         this.log = LoggerFactory.getLogger(ResponseServiceImpl.class);
     }
 
     @Override
-    public void send(Response message) {
-        log.info("ResponseService called");
+    public void send(Message message) {
+        log.info(LogHelper.CALLING_WEBSERVICE_STARTING);
+
+        final MessageRequest request = new MessageRequest();
+        request.setMessage(message);
+
+        conaxServiceClient.messageRequest(request);
+
+        log.info(LogHelper.CALLING_WEBSERVICE_FINISHED);
     }
 }
