@@ -1,0 +1,6 @@
+data:
+  extneral-application: |
+    logging.path=/data/logs
+    logging.level.root=WARN
+    logging.level.com.gepardec=TRACE
+

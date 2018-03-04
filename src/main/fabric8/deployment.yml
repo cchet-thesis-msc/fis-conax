@@ -1,0 +1,31 @@
+spec:
+  template:
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: ${project.artifactId}
+            items:
+              - key: extneral-application
+                path: external-application.properties
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+      containers:
+        - name: integration-service-conax
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: 128Mi
+            limits:
+              cpu: "1.0"
+              memory: 1024Mi
+          volumeMounts:
+            - mountPath: /data
+              name: data
+          volumeMounts:
+            - mountPath: /config
+              name: config
+          env:
+            - name: "CONFIG_LOCATION_EXTERNAL"
+              value: "file:/config"
