@@ -1,2 +1,33 @@
-# fis-conax
-The fuse inteagration service for the conax service
+= fis-conax
+
+This service represents the integration of the conax service, which uses Fuse Integration Service 2.0.
+The integrated service is located in the repository link:https://github.com/cchet-thesis-msc/service-conax[srvice-conax].
+
+== Preconditions
+Make sure that the wsdl location of the conax service points to the proper location in the following files:
+
+* `pom.xml`
+* `src/main/resources/external-application.properties` +
+  When ran locally
+* `src/main/fabric8/configmap.yml` +
+  When ran in openshift
+
+== How to run locally
+Use the following command to build and run the service locally.
+
+`clean compile package spring-boot:run -DCONFIG_LOCATION_EXTERNAL=classpath:`
+
+The parameter **CONFIG_LOCATION_EXTERNAL** defines the prefix for the external-application.properties location,
+which is located in `src/main/resources`.
+
+== How to run in openshift
+Login into your openshift project and ensure that the logged in user has the proper permissions.
+Use the following commands to deploy and undeploy the service.
+
+* `clean install fabric8:deploy` +
+  Deploy the service in the openshift project
+* `clean compile fabric8:undeploy` +
+  Undeploy the service from the openshift project
+
+The parameter **CONFIG_LOCATION_EXTERNAL** is set in the `src/main/fabric8/deployment.yml`, which references a ConfigMap key,
+which is is defined in `src/main/fabric8/configmap.yml`.

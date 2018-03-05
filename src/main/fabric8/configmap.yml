@@ -1,7 +1,7 @@
 data:
-  extneral-application: |
+  external-application: |
     logging.path=/data/logs
     logging.level.root=WARN
     logging.level.com.gepardec=TRACE
-    wsdl.conax=http://service-conax-fis.10.0.75.2.nip.io/soap-api/conax?wsdl
+    wsdl.conax=http://service-conax-57-fis.cloud.itandtel.at/soap-api/conax?wsdl
 

@@ -6,7 +6,7 @@ spec:
           configMap:
             name: ${project.artifactId}
             items:
-              - key: extneral-application
+              - key: external-application
                 path: external-application.properties
         - name: data
           persistentVolumeClaim:
