@@ -3,31 +3,61 @@
 This service represents the integration of the conax service, which uses Fuse Integration Service 2.0.
 The integrated service is located in the repository link:https://github.com/cchet-thesis-msc/service-conax[srvice-conax].
 
-== Preconditions
-Make sure that the wsdl location of the conax service points to the proper location in the following files:
+== Local setup
+The following section describe the setup of the local machine for development.
 
-* `pom.xml`
-* `src/main/resources/external-application.properties` +
-  When ran locally
-* `src/main/fabric8/configmap.yml` +
-  When ran in openshift
+=== Windows
+This section describe how to setup a windows developer machine.
+
+* Download and install link:https://www.docker.com/docker-windows[Docker for Windows]
+* Follow the instructions of the installation wizard
+* Start Docker for Windows
+* Open the Docker for Windows *Settings*, open tab *Daemon* and add __172.30.0.0/16__ at *insecure registries* and click *Apply* (Docker will restart)
+* Download the Openshift client for Windows from the Github project link:https://github.com/Openshift/origin/releases[Openshift/origin]
+* Add Openshift client location to PATH
+* Install *powershift-cli* as describe at the Github project link:https://github.com/getwarped/powershift-cli[powershift-cli] (Windows wrapper util for *Openshift client*)
 
 == How to run locally
 Use the following command to build and run the service locally.
 
+=== Preconditions
+Make sure that the wsdl location of the conax service points to the proper location in the following files:
+
+* `pom.xml`
+* `src/main/resources/external-application.properties`
+
+=== Build and deploy
+This section describes how to build and deploy the service via the maven plugin *fabric8-maven-plugin*.
+
 `mvn -s configuration/settings.xml -P default,fabric8 clean install spring-boot:run -DCONFIG_LOCATION_EXTERNAL=classpath:/development-application.properties`
 
-The parameter **CONFIG_LOCATION_EXTERNAL** defines the prefix for the external-application.properties location,
+The parameter **CONFIG_LOCATION_EXTERNAL** defines the fully qualified path to the file developer-application.properties,
 which is located in `src/main/resources`.
 
-== How to run in openshift
-Login into your openshift project and ensure that the logged in user has the proper permissions.
-Use the following commands to deploy and undeploy the service.
+== How to run in Openshift
+This section describes how to run the service in a local Openshift cluster.
+
+=== Preconditions
+Make sure that the wsdl location of the conax service points to the proper location in the following files:
+
+* `pom.xml`
+* `src/main/fabric8/configmap.yml` +
+  When ran in Openshift
+
+=== Windows
+This section describes how to start the local Openshift cluster on a windows machine with *powershift-cli*.
+
+* Start Docker for Windows
+* Open a Powershell
+* Start the cluster with `powershift.exe cluster up [profile_name]`
+* Wait until cluster is started
+* Login to your Openshift project with `oc.exe login [CLUSTER_URL] -u developer -p developer`
+
+=== Build and deploy
+This section describes how to build and deploy the service via the maven plugin *fabric8-maven-plugin*.
+Ensure you are logged in to your Openshift project via the CLI and that the openshift client binary location has been added to the PATH.
 
 * `mvn -s configuration/settings.xml -P default,fabric8 clean install fabric8:deploy` +
-  Deploy the service in the openshift project
+  Deploy the service in the Openshift project
 * `mvn -s configuration/settings.xml -P default,fabric8 clean compile fabric8:undeploy` +
-  Undeploy the service from the openshift project
-
-The parameter **CONFIG_LOCATION_EXTERNAL** is set in the `src/main/fabric8/deployment.yml`, which references a ConfigMap key,
-which is is defined in `src/main/fabric8/configmap.yml`.
+  Undeploy the service from the Openshift project
