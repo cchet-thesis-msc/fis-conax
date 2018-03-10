@@ -28,4 +28,4 @@ spec:
               name: config
           env:
             - name: "CONFIG_LOCATION_EXTERNAL"
-              value: "file:/config"
+              value: "file:/config/external-application.properties"

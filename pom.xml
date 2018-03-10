@@ -49,11 +49,11 @@
     <dependencies>
 
         <!-- Enabling health checks -->
-<!--        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>-->
+        <!--        <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <optional>true</optional>
+                </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -219,29 +219,40 @@
                     <excludeDevtools>true</excludeDevtools>
                 </configuration>
             </plugin>
-
-            <!-- https://maven.fabric8.io/ -->
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>fabric8-maven-plugin</artifactId>
-                <version>${fabric8.maven.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>resource</goal>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <apiVersion>1</apiVersion>
-                    <createExternalUrls>true</createExternalUrls>
-                    <podName>${project.artifactId}</podName>
-                    <mode>openshift</mode>
-                    <buildStrategy>s2i</buildStrategy>
-                    <buildRecreate>all</buildRecreate>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
+
+    <profiles>
+        <!-- This profile is for remote deployment of the service -->
+        <profile>
+            <id>fabric8</id>
+            <build>
+                <plugins>
+                    <!-- https://maven.fabric8.io/ -->
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>fabric8-maven-plugin</artifactId>
+                        <version>${fabric8.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>resource</goal>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <apiVersion>1</apiVersion>
+                            <createExternalUrls>true</createExternalUrls>
+                            <podName>${project.artifactId}</podName>
+                            <mode>openshift</mode>
+                            <buildStrategy>s2i</buildStrategy>
+                            <buildRecreate>all</buildRecreate>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
