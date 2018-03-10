@@ -41,7 +41,7 @@ import java.net.URL;
 @SpringBootApplication
 @ImportResource({"classpath:/spring/camel-context.xml"})
 @PropertySource("classpath:/serviceConfiguration.properties")
-@PropertySource("${CONFIG_LOCATION_EXTERNAL}/external-application.properties")
+@PropertySource("${CONFIG_LOCATION_EXTERNAL}")
 @ComponentScan(basePackageClasses = Application.class)
 @EnableAutoConfiguration
 public class Application {

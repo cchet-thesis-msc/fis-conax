@@ -23,7 +23,6 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: data
-          volumeMounts:
             - mountPath: /config
               name: config
           env:

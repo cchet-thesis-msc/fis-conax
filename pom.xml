@@ -22,11 +22,13 @@
         <jdk.min.version>${maven.compiler.source}</jdk.min.version>
 
         <!-- configure the versions you want to use here '2.2.170.redhat-000022' -->
-        <fabric8.version>2.2.170.redhat-000022</fabric8.version>
+        <!--<fabric8.version>2.2.170.redhat-000022</fabric8.version>-->
+        <fabric8.version>3.0.8</fabric8.version>
         <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
 
         <!-- maven plugin versions -->
-        <fabric8.maven.plugin.version>3.1.80.redhat-000022</fabric8.maven.plugin.version>
+        <!--<fabric8.maven.plugin.version>3.1.80.redhat-000022</fabric8.maven.plugin.version>-->
+        <fabric8.maven.plugin.version>3.5.37</fabric8.maven.plugin.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
         <maven-jaxb2-plugin.version>2.3.1</maven-jaxb2-plugin.version>
@@ -172,7 +174,7 @@
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/IncomingMessage.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>http://service-conax-57-fis.cloud.itandtel.at/soap-api/conax?wsdl</wsdl>
+                                    <wsdl>http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

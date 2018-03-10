@@ -15,7 +15,7 @@ Make sure that the wsdl location of the conax service points to the proper locat
 == How to run locally
 Use the following command to build and run the service locally.
 
-`mvn -s configuration/settings.xml clean compile package spring-boot:run -DCONFIG_LOCATION_EXTERNAL=classpath:`
+`mvn -s configuration/settings.xml -P default,fabric8 clean install spring-boot:run -DCONFIG_LOCATION_EXTERNAL=classpath:/development-application.properties`
 
 The parameter **CONFIG_LOCATION_EXTERNAL** defines the prefix for the external-application.properties location,
 which is located in `src/main/resources`.
@@ -24,9 +24,9 @@ which is located in `src/main/resources`.
 Login into your openshift project and ensure that the logged in user has the proper permissions.
 Use the following commands to deploy and undeploy the service.
 
-* `mvn -s configuration/settings.xml clean install fabric8:deploy` +
+* `mvn -s configuration/settings.xml -P default,fabric8 clean install fabric8:deploy` +
   Deploy the service in the openshift project
-* `mvn -s configuration/settings.xml clean compile fabric8:undeploy` +
+* `mvn -s configuration/settings.xml -P default,fabric8 clean compile fabric8:undeploy` +
   Undeploy the service from the openshift project
 
 The parameter **CONFIG_LOCATION_EXTERNAL** is set in the `src/main/fabric8/deployment.yml`, which references a ConfigMap key,
