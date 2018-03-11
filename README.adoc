@@ -23,8 +23,8 @@ Use the following command to build and run the service locally.
 === Preconditions
 This section describes how to prepare the service project for the build and deployment.
 
-* Set maven parameter **service.wsdl.location.conax** to the wsdl location of the conax service. +
-  E.g.: http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl
+* Set maven parameter **service.conax.basePath** to the wsdl location of the conax service. +
+  E.g.: http://service-conax-myproject.10.0.75.2.nip.io
 
 === Build and deploy
 This section describes how to build and deploy the service via the maven plugin *fabric8-maven-plugin*.
@@ -40,7 +40,7 @@ This section describes how to run the service in a local Openshift cluster.
 === Preconditions
 This section describes how to prepare the service project for the build and deployment.
 
-* Set maven parameter **service.wsdl.location.conax** to the wsdl location of the conax service. +
+* Set maven parameter **service.conax.basePath** to the wsdl location of the conax service. +
   E.g.: http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl
 
 

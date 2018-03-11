@@ -25,6 +25,7 @@
         <!--<fabric8.version>2.2.170.redhat-000022</fabric8.version>-->
         <fabric8.version>3.0.8</fabric8.version>
         <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
+        <swagger-annotations.version>1.5.13</swagger-annotations.version>
 
         <!-- maven plugin versions -->
         <!--<fabric8.maven.plugin.version>3.1.80.redhat-000022</fabric8.maven.plugin.version>-->
@@ -35,9 +36,18 @@
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <maven-resource-plugin.version>3.0.2</maven-resource-plugin.version>
         <cxf-codegen-plugin.version>3.1.4</cxf-codegen-plugin.version>
+        <swagger-maven-plugin.version>2.3.1</swagger-maven-plugin.version>
+        <copy-rename-maven-plugin>1.0.1</copy-rename-maven-plugin>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 
+        <!-- Swagger generator properties -->
+        <swagger.client.package>com.gepardec.sypoc.swagger.client</swagger.client.package>
+        <swagger.client.conax.package>${swagger.client.package}.conax</swagger.client.conax.package>
         <!-- service properties -->
-        <service.wsdl.location.conax>http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl</service.wsdl.location.conax>
+        <service.conax.basePath>http://service-conax-myproject.10.0.75.2.nip.io</service.conax.basePath>
+        <service.wsdl.location.conax>${service.conax.basePath}/soap-api/conax?wsdl</service.wsdl.location.conax>
+        <service.swagger.json.location>${service.conax.basePath}/v2/api-docs</service.swagger.json.location>
     </properties>
 
     <dependencyManagement>
@@ -96,6 +106,13 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        </dependency>
+
+        <!-- Swagger Dependencies -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
         </dependency>
 
         <!-- testing -->
@@ -176,14 +193,23 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven-resource-plugin.version}</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <delimiters>
-                        <delimiter>@</delimiter>
-                    </delimiters>
-                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*KT.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 
@@ -214,24 +240,117 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-client-conax</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${service.swagger.json.location}</inputSpec>
+                            <output>${project.build.directory}/generated-sources/swagger-tmp/conax</output>
+                            <apiPackage>${swagger.client.conax.package}.api</apiPackage>
+                            <modelPackage>${swagger.client.conax.package}.model</modelPackage>
+                            <invokerPackage>${swagger.client.conax.package}.invoker</invokerPackage>
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <language>java</language>
+                            <configOptions>
+                                <dateLibrary>java8</dateLibrary>
+                                <library>resttemplate</library>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*KT.java</exclude>
-                    </excludes>
-                </configuration>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resource-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <delimiters>
+                                <delimiter>@</delimiter>
+                            </delimiters>
+                            <useDefaultDelimiters>false</useDefaultDelimiters>
+                        </configuration>
+                    </execution>
+
+                    <!-- Swagger code generator not configurable enough, therefore copy only generated sources to new folder -->
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-sources/swagger-client-conax</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/generated-sources/swagger-tmp/conax/src/main/java</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven-clean-plugin.version}</version>
+                <executions>
+                    <!-- Swagger code generator not configurable enough, therefore delete all generated stuff from swagger-tmp folder -->
+                    <execution>
+                        <id>clean-swagger-client-conax</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.build.directory}/generated-sources/swagger-tmp</directory>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Add generated sources after source generation -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

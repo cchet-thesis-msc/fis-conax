@@ -33,6 +33,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -61,8 +63,15 @@ public class Application {
     }
 
     @Bean
-    DozerBeanMapper createDozerBeanMapper(){
-        final DozerBeanMapper mapper = new DozerBeanMapper(new LinkedList<String>(){{
+    RestTemplate createRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
+        return restTemplate;
+    }
+
+    @Bean
+    DozerBeanMapper createDozerBeanMapper() {
+        final DozerBeanMapper mapper = new DozerBeanMapper(new LinkedList<String>() {{
             add("/dozer/map.xml");
         }});
 
