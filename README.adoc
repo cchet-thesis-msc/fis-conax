@@ -21,10 +21,10 @@ This section describe how to setup a windows developer machine.
 Use the following command to build and run the service locally.
 
 === Preconditions
-Make sure that the wsdl location of the conax service points to the proper location in the following files:
+This section describes how to prepare the service project for the build and deployment.
 
-* `pom.xml`
-* `src/main/resources/external-application.properties`
+* Set maven parameter **service.wsdl.location.conax** to the wsdl location of the conax service. +
+  E.g.: http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl
 
 === Build and deploy
 This section describes how to build and deploy the service via the maven plugin *fabric8-maven-plugin*.
