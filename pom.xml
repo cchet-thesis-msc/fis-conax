@@ -34,6 +34,9 @@
         <maven-jaxb2-plugin.version>2.3.1</maven-jaxb2-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <cxf-codegen-plugin.version>3.1.4</cxf-codegen-plugin.version>
+
+        <!-- service properties -->
+        <service.wsdl.location.conax>http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl</service.wsdl.location.conax>
     </properties>
 
     <dependencyManagement>
@@ -57,6 +60,7 @@
                     <optional>true</optional>
                 </dependency>-->
 
+        <!-- Spring Boot Starter Projects -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -68,23 +72,29 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-cxf-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-dozer-starter</artifactId>
+        </dependency>
+
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
         </dependency>
 
         <!-- testing -->
@@ -174,7 +184,7 @@
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/IncomingMessage.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl</wsdl>
+                                    <wsdl>${service.wsdl.location.conax}</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

@@ -38,11 +38,11 @@ which is located in `src/main/resources`.
 This section describes how to run the service in a local Openshift cluster.
 
 === Preconditions
-Make sure that the wsdl location of the conax service points to the proper location in the following files:
+This section describes how to prepare the service project for the build and deployment.
 
-* `pom.xml`
-* `src/main/fabric8/configmap.yml` +
-  When ran in Openshift
+* Set maven parameter **service.wsdl.location.conax** to the wsdl location of the conax service. +
+  E.g.: http://service-conax-myproject.10.0.75.2.nip.io/soap-api/conax?wsdl
+
 
 === Windows
 This section describes how to start the local Openshift cluster on a windows machine with *powershift-cli*.
