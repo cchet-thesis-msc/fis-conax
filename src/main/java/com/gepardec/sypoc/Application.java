@@ -23,6 +23,7 @@ import org.apache.camel.component.cxf.CxfEndpoint;
 import org.apache.camel.component.cxf.CxfSpringEndpoint;
 import org.apache.camel.component.cxf.DataFormat;
 import org.apache.cxf.Bus;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +35,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 
 import java.net.URL;
+import java.util.LinkedList;
 
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
@@ -56,6 +58,15 @@ public class Application {
     @Autowired
     public Application(final Bus bus) {
         this.bus = bus;
+    }
+
+    @Bean
+    DozerBeanMapper createDozerBeanMapper(){
+        final DozerBeanMapper mapper = new DozerBeanMapper(new LinkedList<String>(){{
+            add("/dozer/map.xml");
+        }});
+
+        return mapper;
     }
 
     @Bean
