@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResponseServiceImpl implements ResponseService {
 
-    private final OutgoingMessagePortType conaxServiceClient;
+    @Autowired
+    private OutgoingMessagePortType conaxServiceClient;
+
     private final Logger log;
 
     @Autowired
-    public ResponseServiceImpl(final OutgoingMessagePortType conaxServiceClient) {
-        this.conaxServiceClient = conaxServiceClient;
-
+    public ResponseServiceImpl() {
         this.log = LoggerFactory.getLogger(ResponseServiceImpl.class);
     }
 

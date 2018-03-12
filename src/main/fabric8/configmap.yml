@@ -3,6 +3,6 @@ data:
     logging.path=/data/logs
     logging.level.root=WARN
     logging.level.com.gepardec=TRACE
-    wsdl.conax=${service.wsdl.location.conax}
+    conax.wsdl.remote.url=${service.conax.wsdl.remote.url}
     conax.basePath=${service.conax.basePath}
 

@@ -1,6 +1,5 @@
 package com.gepardec.sypoc.service.impl;
 
-
 import com.gepardec.sypoc.service.api.ConaxService;
 import com.gepardec.sypoc.service.api.ResponseService;
 import com.gepardec.sypoc.transformer.ConaxTransformer;
@@ -12,13 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConaxServiceImpl implements ConaxService {
 
-    private final ResponseService responseService;
+    @Autowired
+    private ResponseService responseService;
+
     private final Logger log;
 
-    @Autowired
-    public ConaxServiceImpl(ResponseService responseService) {
-        this.responseService = responseService;
-
+    public ConaxServiceImpl() {
         this.log = LoggerFactory.getLogger(ConaxServiceImpl.class);
     }
 
@@ -27,5 +25,4 @@ public class ConaxServiceImpl implements ConaxService {
         log.info("ConaxService called");
         responseService.send(ConaxTransformer.conaxToResponse10(msg));
     }
-
 }

@@ -1,13 +1,12 @@
 package com.gepardec.sypoc.routes;
 
 import com.gepardec.sypoc.constants.Endpoints;
-import com.gepardec.sypoc.constants.Processors;
 import com.gepardec.sypoc.constants.ServiceDefinitions;
+import com.gepardec.sypoc.processors.ConaxProcessor;
 import com.gepardec.sypoc.service.api.ConaxService;
 import com.gepardec.sypoc.utils.LogHelper;
 import com.gepardec.sypoc.wsdl.incomingmessage.MessageRequest;
 import org.apache.camel.Endpoint;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,17 +15,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class IncomingRoute extends RouteBuilder {
 
-    private final Endpoint incomingMessageCxfEndpoint;
-    private final Processor conaxProcessor;
-    private final ConaxService conaxService;
-
     @Autowired
-    public IncomingRoute(@Qualifier(Endpoints.INCOMING_MESSAGE) final Endpoint incomingMessageCxfEndpoint,
-                         @Qualifier(Processors.CONAX) final Processor conaxProcessor,
-                         final ConaxService conaxService) {
-        this.incomingMessageCxfEndpoint = incomingMessageCxfEndpoint;
-        this.conaxProcessor = conaxProcessor;
-        this.conaxService = conaxService;
+    private ConaxProcessor conaxProcessor;
+    @Autowired
+    private ConaxService conaxService;
+    @Autowired
+    @Qualifier(Endpoints.INCOMING_MESSAGE)
+    private Endpoint incomingMessageCxfEndpoint;
+
+    public IncomingRoute() {
     }
 
     /**

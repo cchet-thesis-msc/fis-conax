@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="OutgoingMessage" targetNamespace="http://gepardec.com/sypoc/wsdl/conax/outgoingMessage" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://gepardec.com/sypoc/wsdl/conax/outgoingMessage" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified"
+                   elementFormDefault="qualified"
+                   targetNamespace="http://gepardec.com/sypoc/wsdl/conax/xml/messageRequest"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:simpleType name="service_type">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="digitv"/>
+                    <xs:enumeration value="internet"/>
+                    <xs:enumeration value="mail"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="message">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="service">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="action">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="data">
+                                                    <xs:annotation>
+                                                        <xs:documentation>/smartcard_list</xs:documentation>
+                                                    </xs:annotation>
+                                                    <xs:complexType>
+                                                        <xs:sequence>
+                                                            <xs:element type="xs:string" name="order_list"/>
+                                                            <xs:element type="xs:string" name="status"/>
+                                                            <xs:element type="xs:string" name="error_timestamp"/>
+                                                            <xs:element type="xs:string" name="error_desc"/>
+                                                            <xs:element type="xs:string" name="country"/>
+                                                            <xs:element type="xs:byte" name="nofsmartcards"/>
+                                                            <xs:element type="xs:string" name="priority"/>
+                                                            <xs:element type="xs:string" name="product_id"/>
+                                                            <xs:element type="xs:long" name="subscription_end"/>
+                                                            <xs:element type="xs:long" name="subscription_start"/>
+                                                            <xs:element type="xs:string" name="smartcard">
+                                                                <xs:annotation>
+                                                                    <xs:documentation>smartcard_list</xs:documentation>
+                                                                </xs:annotation>
+                                                            </xs:element>
+                                                        </xs:sequence>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:sequence>
+                                            <xs:attribute type="xs:string" name="name"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attribute type="xs:string" name="name"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute type="xs:string" name="name"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://gepardec.com/sypoc/wsdl/conax/xml/messageRequest" xmlns:tns="http://gepardec.com/sypoc/wsdl/conax/outgoingMessage"
+                    attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://gepardec.com/sypoc/wsdl/conax/outgoingMessage">
+            <xsd:import namespace="http://gepardec.com/sypoc/wsdl/conax/xml/messageRequest"/>
+            <xsd:element name="messageRequest" type="tns:messageRequest"/>
+            <xsd:complexType name="messageRequest">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" ref="ns0:message"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="messageResponse" type="tns:messageResponse"/>
+            <xsd:complexType name="messageResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="string" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="messageRequest">
+        <wsdl:part name="parameters" element="tns:messageRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="messageResponse">
+        <wsdl:part name="parameters" element="tns:messageResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="OutgoingMessagePortType">
+        <wsdl:operation name="messageRequest">
+            <wsdl:input name="messageRequest" message="tns:messageRequest">
+            </wsdl:input>
+            <wsdl:output name="messageResponse" message="tns:messageResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="OutgoingMessageSoapBinding" type="tns:OutgoingMessagePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="messageRequest">
+            <soap:operation soapAction="messageRequest" style="document"/>
+            <wsdl:input name="messageRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="messageResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="OutgoingMessage">
+        <wsdl:port name="OutgoingMessagePort" binding="tns:OutgoingMessageSoapBinding">
+            <soap:address location="http://localhost:8080/sy-poc-common/OutgoingMessage"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

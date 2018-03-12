@@ -1,28 +1,26 @@
 package com.gepardec.sypoc.routes;
 
 import com.gepardec.sypoc.constants.Endpoints;
-import com.gepardec.sypoc.constants.Processors;
+import com.gepardec.sypoc.processors.ConaxResultProcessor;
 import com.gepardec.sypoc.service.api.ResponseService;
+import com.gepardec.sypoc.transformer.ConaxTransformer;
 import com.gepardec.sypoc.utils.LogHelper;
+import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ConaxResultRoute extends RouteBuilder {
 
     private static final String REF_OUTGOING_RESULT = "ResponseService";
-    private final Processor conaxResultProcessor;
-    private final ResponseService responseService;
-
     @Autowired
-    public ConaxResultRoute(@Qualifier(Processors.CONAX_RESULT) final Processor conaxResultProcessor,
-                            final ResponseService responseService) {
-        this.conaxResultProcessor = conaxResultProcessor;
-        this.responseService = responseService;
-    }
+    private ConaxResultProcessor conaxResultProcessor;
+    @Autowired
+    private ResponseService responseService;
 
     public void configure() {
         log.info(LogHelper.ROUTE_BUILDER_STARTING);

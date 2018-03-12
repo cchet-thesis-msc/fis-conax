@@ -41,13 +41,16 @@
         <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 
-        <!-- Swagger generator properties -->
-        <swagger.client.package>com.gepardec.sypoc.swagger.client</swagger.client.package>
-        <swagger.client.conax.package>${swagger.client.package}.conax</swagger.client.conax.package>
-        <!-- service properties -->
+        <!-- swagger-codegen-maven-plugin -->
+        <swagger.client.spec.base.path>${project.basedir}/src/main/resources/swagger</swagger.client.spec.base.path>
+        <swagger.client.root.package>com.gepardec.sypoc.swagger.client</swagger.client.root.package>
+
+        <!-- CXF generator plugin properties -->
+        <cxf.wsdl.base.path>${project.basedir}/src/main/resources/wsdl</cxf.wsdl.base.path>
+
+        <!-- runtime properties -->
         <service.conax.basePath>http://service-conax-myproject.10.0.75.2.nip.io</service.conax.basePath>
-        <service.wsdl.location.conax>${service.conax.basePath}/soap-api/conax?wsdl</service.wsdl.location.conax>
-        <service.swagger.json.location>${service.conax.basePath}/v2/api-docs</service.swagger.json.location>
+        <service.conax.wsdl.remote.url>${service.conax.basePath}/soap-api/conax?wsdl</service.conax.wsdl.remote.url>
     </properties>
 
     <dependencyManagement>
@@ -228,7 +231,7 @@
                                     <wsdl>${project.basedir}/src/main/resources/wsdl/IncomingMessage.wsdl</wsdl>
                                 </wsdlOption>
                                 <wsdlOption>
-                                    <wsdl>${service.wsdl.location.conax}</wsdl>
+                                    <wsdl>${cxf.wsdl.base.path}/conax/v1/OutgoingMessage.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
@@ -251,11 +254,11 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${service.swagger.json.location}</inputSpec>
+                            <inputSpec>${swagger.client.spec.base.path}/conax/v1/api-docs.json</inputSpec>
                             <output>${project.build.directory}/generated-sources/swagger-tmp/conax</output>
-                            <apiPackage>${swagger.client.conax.package}.api</apiPackage>
-                            <modelPackage>${swagger.client.conax.package}.model</modelPackage>
-                            <invokerPackage>${swagger.client.conax.package}.invoker</invokerPackage>
+                            <apiPackage>${swagger.client.root.package}.conax.api</apiPackage>
+                            <modelPackage>${swagger.client.root.package}.conax.model</modelPackage>
+                            <invokerPackage>${swagger.client.root.package}.conax.invoker</invokerPackage>
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <generateSupportingFiles>true</generateSupportingFiles>
                             <generateApiTests>false</generateApiTests>

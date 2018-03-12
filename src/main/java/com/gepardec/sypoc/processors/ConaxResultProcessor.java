@@ -1,6 +1,5 @@
 package com.gepardec.sypoc.processors;
 
-import com.gepardec.sypoc.constants.Processors;
 import com.gepardec.sypoc.transformer.ConaxTransformer;
 import com.gepardec.sypoc.utils.LogHelper;
 import org.apache.camel.Exchange;
@@ -9,7 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component(Processors.CONAX_RESULT)
+/**
+ * @author Thomas Herzog <herzog.thomas81@gmail.com>
+ * @since 03/12/18
+ */
+@Component
 public class ConaxResultProcessor implements Processor {
 
     private final Logger log;

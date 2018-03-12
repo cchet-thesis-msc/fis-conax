@@ -1,4 +1,4 @@
-package com.gepardec.sypoc.observer;
+package com.gepardec.sypoc.observers;
 
 import com.gepardec.sypoc.swagger.client.conax.invoker.ApiClient;
 import org.springframework.beans.factory.annotation.Autowired;

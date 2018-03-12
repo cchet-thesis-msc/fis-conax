@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inc="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:mes="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <inc:messageRequest>
+         <!--Optional:-->
+         <mes:message name="message">
+            <mes:service name="internet">
+               <mes:action name="activate">
+                  <mes:data>
+                     <mes:country>AT</mes:country>
+                     <mes:order_no>1</mes:order_no>
+                     <mes:product_id>1</mes:product_id>
+                     <mes:subscription_start>10.10.2018 10:10:00</mes:subscription_start>
+                     <mes:subscription_end>10.10.2019 10:10:00</mes:subscription_end>
+                     <mes:priority>1</mes:priority>
+                     <mes:nofsmartcards>1</mes:nofsmartcards>
+                     <mes:smartcard_list>1</mes:smartcard_list>
+                  </mes:data>
+               </mes:action>
+            </mes:service>
+         </mes:message>
+      </inc:messageRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
