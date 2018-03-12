@@ -12,7 +12,7 @@ spec:
           persistentVolumeClaim:
             claimName: data
       containers:
-        - name: integration-service-conax
+        - name: ${project.artifactId}
           resources:
             requests:
               cpu: "0.2"
@@ -28,3 +28,6 @@ spec:
           env:
             - name: "CONFIG_LOCATION_EXTERNAL"
               value: "file:/config/external-application.properties"
+              # Necessary, otherwise java console won't work in Openshift
+            - name: "AB_JOLOKIA_HTTPS"
+              value: "true"
