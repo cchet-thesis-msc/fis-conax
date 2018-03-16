@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping map-id="mappingMessageToConaxJson">
+        <class-a>com.gepardec.sypoc.wsdl.incomingmessage.MessageRequest</class-a>
+        <class-b>com.gepardec.sypoc.swagger.client.conax.model.ImmutableConaxRequest</class-b>
+        <field>
+            <a>message.service.name</a>
+            <b>service</b>
+        </field>
+        <field>
+            <a>message.service.action.name</a>
+            <b>action</b>
+        </field>
+        <field>
+            <a>message.service.action.data.priority</a>
+            <b>data.priority</b>
+        </field>
+        <field>
+            <a>message.service.action.data.productId</a>
+            <b>data.productId</b>
+        </field>
+        <field>
+            <a>message.service.action.data.smartcardList</a>
+            <b>data.smartcard</b>
+        </field>
+        <field>
+            <a>message.service.action.data.country</a>
+            <b>data.country</b>
+        </field>
+        <field>
+            <a>message.service.action.data.nofsmartcards</a>
+            <b>data.nofsmartcards</b>
+        </field>
+        <field>
+            <a>message.service.action.data.smartcardList</a>
+            <b>data.smartcard</b>
+        </field>
+        <field>
+            <a>message.service.action.data.subscriptionStart</a>
+            <b>data.subscriptionStart</b>
+        </field>
+        <field>
+            <a>message.service.action.data.subscriptionEnd</a>
+            <b>data.subscriptionEnd</b>
+        </field>
+    </mapping>
+</mappings>

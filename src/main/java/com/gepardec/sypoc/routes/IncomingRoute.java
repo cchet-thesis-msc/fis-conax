@@ -3,6 +3,7 @@ package com.gepardec.sypoc.routes;
 import com.gepardec.sypoc.constants.Endpoints;
 import com.gepardec.sypoc.constants.ServiceDefinitions;
 import com.gepardec.sypoc.processors.ConaxProcessor;
+import com.gepardec.sypoc.service.api.ConaxJsonService;
 import com.gepardec.sypoc.service.api.ConaxService;
 import com.gepardec.sypoc.utils.LogHelper;
 import com.gepardec.sypoc.wsdl.incomingmessage.MessageRequest;
@@ -19,6 +20,8 @@ public class IncomingRoute extends RouteBuilder {
     private ConaxProcessor conaxProcessor;
     @Autowired
     private ConaxService conaxService;
+    @Autowired
+    private ConaxJsonService conaxJsonService;
     @Autowired
     @Qualifier(Endpoints.INCOMING_MESSAGE)
     private Endpoint incomingMessageCxfEndpoint;
@@ -38,6 +41,7 @@ public class IncomingRoute extends RouteBuilder {
                 .choice()
                 // internet
                 .when().simple(getSimpleExpressionFor(ServiceDefinitions.MessageType.TYPE_INTERNET))
+                .bean(conaxJsonService)
                 .process(conaxProcessor)
                 .bean(conaxService).to(Endpoints.DIRECT_CONEX_RESULT) // Order important because direct:* route transforms message !!!!
                 // mail

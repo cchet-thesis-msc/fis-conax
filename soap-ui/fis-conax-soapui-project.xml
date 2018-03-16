@@ -1,25 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inc="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:mes="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <inc:messageRequest>
-         <!--Optional:-->
-         <mes:message name="message">
-            <mes:service name="internet">
-               <mes:action name="activate">
-                  <mes:data>
-                     <mes:country>AT</mes:country>
-                     <mes:order_no>1</mes:order_no>
-                     <mes:product_id>1</mes:product_id>
-                     <mes:subscription_start>10.10.2018 10:10:00</mes:subscription_start>
-                     <mes:subscription_end>10.10.2019 10:10:00</mes:subscription_end>
-                     <mes:priority>1</mes:priority>
-                     <mes:nofsmartcards>1</mes:nofsmartcards>
-                     <mes:smartcard_list>1</mes:smartcard_list>
-                  </mes:data>
-               </mes:action>
-            </mes:service>
-         </mes:message>
-      </inc:messageRequest>
-   </soapenv:Body>
-</soapenv:Envelope>
+<con:soapui-project id="83795254-d3ae-4cb6-8ad2-bafa712b15f1" activeEnvironment="Default" name="fis-conax" resourceRoot="${projectDir}" soapui-version="5.4.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ba83730e-4d27-4d62-836f-88d761d49e21" wsaVersion="NONE" name="IncomingMessageSoapBinding" type="wsdl" bindingName="{http://gepardec.com/sypoc/wsdl/incomingMessage}IncomingMessageSoapBinding" soapVersion="1_1" anonymous="optional" definition="../src/main/resources/wsdl/IncomingMessage.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\D:\repositories\Github\cchet-thesis-msc\fis-conax\src\main\resources\wsdl\IncomingMessage.wsdl"><con:part><con:url>file:\D:\repositories\Github\cchet-thesis-msc\fis-conax\src\main\resources\wsdl\IncomingMessage.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="IncomingMessage" targetNamespace="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="message">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="service">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="action">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="data">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="country" type="xs:string"/>
+                              <xs:element name="order_no" type="xs:string"/>
+                              <xs:element name="product_id" type="xs:int"/>
+                              <xs:element name="subscription_start" type="xs:string"/>
+                              <xs:element name="subscription_end" type="xs:string"/>
+                              <xs:element name="priority" type="xs:string"/>
+                              <xs:element name="nofsmartcards" type="xs:byte"/>
+                              <xs:element name="smartcard_list" type="xs:string"/>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="name" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:ns0="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest">
+      <xsd:import namespace="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest"/>
+      <xsd:element name="messageRequest" type="tns:messageRequest"/>
+      <xsd:complexType name="messageRequest">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" ref="ns0:message"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="messageRequest">
+    <wsdl:part name="parameters" element="tns:messageRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IncomingMessagePortType">
+    <wsdl:operation name="messageRequest">
+      <wsdl:input name="messageRequest" message="tns:messageRequest"></wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IncomingMessageSoapBinding" type="tns:IncomingMessagePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="messageRequest">
+      <soap:operation soapAction="messageRequest" style="document"/>
+      <wsdl:input name="messageRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IncomingMessage">
+    <wsdl:port name="IncomingMessagePort" binding="tns:IncomingMessageSoapBinding">
+      <soap:address location="http://localhost:8080/sy-poc-common/IncomingMessage"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/sy-poc-common/IncomingMessage</con:endpoint></con:endpoints><con:operation id="9bd56b4d-1ece-45f9-8e19-2a84cd08e0a6" isOneWay="false" action="messageRequest" name="messageRequest" bindingOperationName="messageRequest" type="One-Way" inputName="messageRequest" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="4c5bab1a-00d3-4b5a-b1fd-80a488b1527b" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://fis-conax-myproject.10.0.75.2.nip.io/soap-api/IncomingMessage</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inc="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:mes="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <inc:messageRequest>\r
+         <!--Optional:-->\r
+         <mes:message name="message">\r
+            <mes:service name="internet">\r
+               <mes:action name="activate">\r
+                  <mes:data>\r
+                     <mes:country>AT</mes:country>\r
+                     <mes:order_no>1</mes:order_no>\r
+                     <mes:product_id>1</mes:product_id>\r
+                     <mes:subscription_start>10.10.2018 10:10:00</mes:subscription_start>\r
+                     <mes:subscription_end>10.10.2019 10:10:00</mes:subscription_end>\r
+                     <mes:priority>1</mes:priority>\r
+                     <mes:nofsmartcards>1</mes:nofsmartcards>\r
+                     <mes:smartcard_list>1</mes:smartcard_list>\r
+                  </mes:data>\r
+               </mes:action>\r
+            </mes:service>\r
+         </mes:message>\r
+      </inc:messageRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="messageRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="08deb755-8859-4f1d-9729-55120e1240f2" name="IncomingMessageSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="ce8f640f-5517-49f5-92a9-80d62bda9414" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="messageRequest TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="5c8c260b-e918-4943-96b1-3e9c90ecaffa" name="messageRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>IncomingMessageSoapBinding</con:interface><con:operation>messageRequest</con:operation><con:request name="messageRequest" id="ac99fe59-9893-4217-a688-62ca119f160a"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/sy-poc-common/IncomingMessage</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:inc="http://gepardec.com/sypoc/wsdl/incomingMessage" xmlns:mes="http://gepardec.com/sypoc/xml/fis/conax/xml/messageRequest">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <inc:messageRequest>\r
+         <!--Optional:-->\r
+         <mes:message name="?">\r
+            <mes:service name="?">\r
+               <mes:action name="?">\r
+                  <mes:data>\r
+                     <mes:country>?</mes:country>\r
+                     <mes:order_no>?</mes:order_no>\r
+                     <mes:product_id>?</mes:product_id>\r
+                     <mes:subscription_start>?</mes:subscription_start>\r
+                     <mes:subscription_end>?</mes:subscription_end>\r
+                     <mes:priority>?</mes:priority>\r
+                     <mes:nofsmartcards>?</mes:nofsmartcards>\r
+                     <mes:smartcard_list>?</mes:smartcard_list>\r
+                  </mes:data>\r
+               </mes:action>\r
+            </mes:service>\r
+         </mes:message>\r
+      </inc:messageRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="messageRequest"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

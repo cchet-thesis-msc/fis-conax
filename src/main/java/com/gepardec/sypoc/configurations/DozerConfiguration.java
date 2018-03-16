@@ -1,6 +1,8 @@
 package com.gepardec.sypoc.configurations;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.converter.dozer.DozerBeanMapperConfiguration;
+import org.apache.camel.converter.dozer.DozerTypeConverterLoader;
 import org.dozer.DozerBeanMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +20,14 @@ public class DozerConfiguration {
     DozerBeanMapperConfiguration createDozerBeanMapper() {
         final DozerBeanMapperConfiguration dozerConfig = new DozerBeanMapperConfiguration();
         dozerConfig.setMappingFiles(new LinkedList<String>() {{
-            add("/dozer/map.xml");
+            // we need to add classpath protocol too
+            add("classpath:/dozer/mappings.xml");
         }});
-
         return dozerConfig;
+    }
+
+    @Bean
+    DozerTypeConverterLoader createDozerTypeConverterLoader(final CamelContext camelContext, final DozerBeanMapperConfiguration dozerConfig){
+        return new DozerTypeConverterLoader(camelContext, dozerConfig);
     }
 }
