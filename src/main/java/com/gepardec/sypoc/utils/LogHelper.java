@@ -14,6 +14,8 @@ public class LogHelper {
     public static final String ROUTE_BUILDER_FINISHED = "Built routes";
     public static final String CALLING_WEBSERVICE_STARTING = "Calling webservice ....";
     public static final String CALLING_WEBSERVICE_FINISHED = "Called webservice ";
+    public static final String CALLING_RESTSERVICE_STARTING = "Calling rest service ....";
+    public static final String CALLING_RESTSERVICE_FINISHED = "Called rest service";
 
     private LogHelper() {
     }
