@@ -43,10 +43,12 @@ public class IncomingRoute extends RouteBuilder {
                 .when().simple(getSimpleExpressionFor(ServiceDefinitions.MessageType.TYPE_INTERNET))
                 .bean(conaxJsonService)
                 .process(conaxProcessor)
-                .bean(conaxService).to(Endpoints.DIRECT_CONEX_RESULT) // Order important because direct:* route transforms message !!!!
+                .bean(conaxService).to(Endpoints.DIRECT_CONAX_RESULT) // Order important because direct:* route transforms message !!!!
                 // mail
                 .when().simple(getSimpleExpressionFor(ServiceDefinitions.MessageType.TYPE_MAIL))
-                .process(conaxProcessor).bean(conaxService) // CallIgnito missing !!!!!
+                .bean(conaxJsonService)
+                .process(conaxProcessor)
+                .bean(conaxService) // CallIgnito missing !!!!!
                 // digitv
                 .when().simple(getSimpleExpressionFor(ServiceDefinitions.MessageType.TYPE_DIGITV))
                 .to(Endpoints.DIRECT_TV_OUTGOING)

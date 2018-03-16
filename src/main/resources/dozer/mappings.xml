@@ -24,6 +24,10 @@
             <b>data.productId</b>
         </field>
         <field>
+            <a>message.service.action.data.orderNo</a>
+            <b>data.orderList</b>
+        </field>
+        <field>
             <a>message.service.action.data.smartcardList</a>
             <b>data.smartcard</b>
         </field>
